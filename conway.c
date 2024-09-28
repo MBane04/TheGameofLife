@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 int mod(int n, int d) //modulo
 {
     while(n < 0)
@@ -68,7 +69,7 @@ void initLine(conway *c, char *seed, char empty)  // 1D initial state
     }
 }
 
-void initBoard(conway *c, char **seed, char empty) //2D(board) initial state
+void initTable(conway *c, char **seed, char empty) //2D(board) initial state
 {
     int i = 0; 
     //c.x amnt of strings
@@ -149,17 +150,41 @@ void conwayDestroy(conway *c)
     }
 }
 
-char **conway_print(conway *c, char live, char dead)
+char **conway_print(conway *c, char live, char dead, char **ret)
 {
-    //allocate array of pointers
-    char **ret = malloc(c->x * sizeof(char *));
+    char allocate = 0;
+    if (!ret)//if ret is null
+    {
+        // allocate array of pointers
+        ret = malloc(c->x * sizeof(char *));
+        if(!ret)
+        {
+            printf("Memory allocation failed for ret!");
+            return NULL;
+        }
+        allocate = 1;
+    }
 
     //for each row
     int i = 0;
     for(int x = 0; x < c->x; x++)
     {
-        //allcoate an array of chars + terminator
-        ret[x] = malloc(c->y * sizeof(char) + 1);
+        //allcoate an array of chars + terminator if return isn't null
+        if(allocate)
+        {
+            ret[x] = malloc(c->y * sizeof(char) + 1);
+            if (!ret[x])
+            { // Check for allocation failure
+                printf("Memory allocation for row %d failed!\n", x);
+                // Handle memory cleanup before returning
+                for (int j = 0; j < x; j++)
+                {
+                    free(ret[j]);
+                }
+                free(ret);
+                return NULL;
+            }
+        }
         for(int y = 0; y < c->y; y++)
         {
             ret[x][y] = c->board[i] ? live : dead;

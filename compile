@@ -1,1 +1,1 @@
-nvcc main.cu -o play
+gcc -g main.c conway.c -o play -lGL -lGLU -lglut
