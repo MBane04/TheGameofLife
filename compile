@@ -1,0 +1,1 @@
+nvcc TheGameofLife.cu -o play
