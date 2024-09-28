@@ -1,1 +1,1 @@
-nvcc TheGameofLife.cu -o play
+nvcc main.cu -o play
