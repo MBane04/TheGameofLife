@@ -21,4 +21,4 @@ void conwaySimulate(conway *c); //runs the game of life
 void conwaysimulateN(conway *c, int n); //runs the game of life N times
 void conwayDestroy(conway *c); //destroys life
 
-char **conway_print(conway *c,char alive, char dead, char **ret);
+char **conwayPrint(conway *c,char alive, char dead, char **ret);

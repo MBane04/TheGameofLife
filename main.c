@@ -67,14 +67,14 @@ int main()
     initTable(&c, seed, ' ');
 
     int numberOfRounds = 8000000;
-    char **output = conway_print(&c, '0', ' ', NULL);
+    char **output = conwayPrint(&c, '0', ' ', NULL);
     printTable(output, c.x);
     //system("clear");
     
     while(numberOfRounds--)
     {
         conwaySimulate(&c);
-        output = conway_print(&c, '0', ' ', NULL);
+        output = conwayPrint(&c, '0', ' ', NULL);
         printTable(output, c.x);
         usleep(10000);
         system("clear");

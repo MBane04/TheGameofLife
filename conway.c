@@ -150,7 +150,7 @@ void conwayDestroy(conway *c)
     }
 }
 
-char **conway_print(conway *c, char live, char dead, char **ret)
+char **conwayPrint(conway *c, char live, char dead, char **ret)
 {
     char allocate = 0;
     if (!ret)//if ret is null
