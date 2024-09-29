@@ -12,8 +12,7 @@ This implementation is currently Linux-based and provides a terminal-based visua
 ## Build Plans
 
 ### Iteration 1: Implement GoL Algorithm - COMPLETE (09/28/24)
-- 1.1 Add inter-platform support (Windows/Linux)
-- 1.2 Toggle warp on/off COMPLETED (09/28/224)
+- 1.1 Toggle warp on/off COMPLETED (09/28/224)
 
 ### Iteration 2: Build OpenGL Engine
 - 2.1 Add `SimulationSetup` file to read in and save values from files
@@ -35,6 +34,7 @@ This implementation is currently Linux-based and provides a terminal-based visua
   - Change game length
 
 ## (Distant) Future Plans
+- Add inter-platform support (Windows/Linux)
 - Parallelize using NVIDIA's CUDA library
 - Integrate machine learning to try to survive
 - Integrate rhythmic pulses to see if AI can find a way to disrupt or survive
