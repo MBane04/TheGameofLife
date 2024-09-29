@@ -1,1 +1,3 @@
+cd src
 gcc -g main.c conway.c -o play -lGL -lGLU -lglut
+mv play ../executable
