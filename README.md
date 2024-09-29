@@ -13,7 +13,7 @@ This implementation is currently Linux-based and provides a terminal-based visua
 
 ### Iteration 1: Implement GoL Algorithm - COMPLETE (09/28/24)
 - 1.1 Add inter-platform support (Windows/Linux)
-- 1.2 Toggle warp on/off
+- 1.2 Toggle warp on/off COMPLETED (09/28/224)
 
 ### Iteration 2: Build OpenGL Engine
 - 2.1 Add `SimulationSetup` file to read in and save values from files
