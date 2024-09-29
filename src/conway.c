@@ -1,4 +1,5 @@
 #include "conway.h"
+#include "globals.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,49 +88,76 @@ void initTable(conway *c, char **seed, char empty) //2D(board) initial state
 
 void conwaySimulate(conway *c)
 {
-    //temp variable to store our current board so that we don't mess with neighbor counts
+    // Temp variable to store our current board so that we don't mess with neighbor counts
     char *temp = malloc(c->x * c->y);
-
-
-    int i = 0;
-    //count active neighbors
-    for(int x = 0; x < c->x; x++)
+    if (!temp)
     {
-        for(int y = 0; y < c->y; y++)
+        printf("Memory allocation failed for temp!\n");
+        return; // Handle memory allocation failure
+    }
+
+    // Count active neighbors
+    for (int x = 0; x < c->x; x++)
+    {
+        for (int y = 0; y < c->y; y++)
         {
             int activeNeighbors = 0;
-            for(int xi = -1; xi <= 1; xi++)
+
+            for (int xi = -1; xi <= 1; xi++)
             {
-                for(int yi = -1; yi <= 1; yi++)
+                for (int yi = -1; yi <= 1; yi++)
                 {
-                    // if i am alive and my possibly warped neighbors are alive
-                    if((xi || yi) && cellWrap(c, x + xi, y + yi))
+                    // Skip the cell itself
+                    if (xi == 0 && yi == 0)
+                        continue;
+
+                    int neighborX = x + xi;
+                    int neighborY = y + yi;
+
+                    // Check wrapping or bounds based on WrapToggle
+                    if (WrapToggle == 1) // Wrapping enabled
+                    {
+                        neighborX = mod(neighborX, c->x);
+                        neighborY = mod(neighborY, c->y);
+                    }
+                    else // Wrapping disabled
+                    {
+                        // Check bounds
+                        if (neighborX < 0 || neighborX >= c->x || neighborY < 0 || neighborY >= c->y)
+                        {
+                            continue; // Out of bounds, skip this neighbor
+                        }
+                    }
+
+                    // Check if the neighbor cell is alive
+                    if (c->board[neighborX * c->y + neighborY])
                     {
                         activeNeighbors++;
                     }
                 }
             }
-            // lives cells with 2 or 3 neighbors stay alive, a dead cell with 3 neighbors comes to life
-            if (c->board[i] && (activeNeighbors == 2 || activeNeighbors == 3)) // if i am alive and have 2 or 3 neighbors
+
+            // Calculate the index for the current cell
+            int i = x * c->y + y;
+
+            // Apply the rules of Conway's Game of Life
+            if (c->board[i] && (activeNeighbors == 2 || activeNeighbors == 3)) // If alive with 2 or 3 neighbors
             {
-                temp[i] = 1;
+                temp[i] = 1; // Stay alive
             }
-            else if (!c->board[i] && activeNeighbors == 3) // if i am dead and have 3 neighbors, I am alive
+            else if (!c->board[i] && activeNeighbors == 3) // If dead with exactly 3 neighbors
             {
-                temp[i] = 1;
+                temp[i] = 1; // Come to life
             }
-            else // just remain dead
+            else // Remain dead
             {
                 temp[i] = 0;
             }
-            i++;
         }
     }
-
-    //copy temp back to the board
-    memcpy(c->board, temp, c->x*c->y);
+    // Copy temp back to the board
+    memcpy(c->board, temp, c->x * c->y);
     free(temp);
-    
 }
 
 void conwaysimulateN(conway *c, int n)

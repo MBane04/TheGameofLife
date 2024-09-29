@@ -10,9 +10,6 @@ typedef struct {
     char *board;
 } conway;
 
-
-int cellWrap(conway *c, int x, int y); //wrap function
-
 void startUp(conway *c, char wrap, int x, int y); //algorithms
 void initLine(conway *c, char *seed, char empty); //initial state
 void initTable(conway *c, char **seed, char empty);
